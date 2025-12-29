@@ -27,7 +27,14 @@
 extern "C" {
 #endif
 
-#include "err_code.h"
+#include "stdint.h"
+
+typedef enum 
+{
+	PID_CONTROLLER_STATUS_SUCCESS = 0,
+	PID_CONTROLLER_STATUS_FAILED,
+	PID_CONTROLLER_STATUS_INVALID_ARG
+} pid_controller_status_t;
 
 /**
  * @brief   Handle structure.
@@ -58,7 +65,7 @@ typedef struct {
  *
  * @return
  *      - Handle structure: Success.
- *      - Others:           Fail.
+ *      - Others: Failed.
  */
 pid_controller_handle_t pid_controller_init(void);
 
@@ -69,10 +76,10 @@ pid_controller_handle_t pid_controller_init(void);
  * @param   config Configuration structure.
  *
  * @return
- *      - ERR_CODE_SUCCESS: Success.
- *      - Others:           Fail.
+ *      - PID_CONTROLLER_STATUS_SUCCESS: Success.
+ *      - Others: Failed.
  */
-err_code_t pid_controller_set_config(pid_controller_handle_t handle, pid_controller_cfg_t config);
+pid_controller_status_t pid_controller_set_config(pid_controller_handle_t handle, pid_controller_cfg_t config);
 
 /*
  * @brief   Configure PID controller to run.
@@ -80,10 +87,10 @@ err_code_t pid_controller_set_config(pid_controller_handle_t handle, pid_control
  * @param 	handle Handle structure.
  *
  * @return
- *      - ERR_CODE_SUCCESS: Success.
- *      - Others:           Fail.
+ *      - PID_CONTROLLER_STATUS_SUCCESS: Success.
+ *      - Others: Failed.
  */
-err_code_t pid_controller_config(pid_controller_handle_t handle);
+pid_controller_status_t pid_controller_config(pid_controller_handle_t handle);
 
 /*
  * @brief   Update PID controller.
@@ -94,10 +101,10 @@ err_code_t pid_controller_config(pid_controller_handle_t handle);
  * @param 	pid_out Output value.
  *
  * @return
- *      - ERR_CODE_SUCCESS: Success.
- *      - Others:           Fail.
+ *      - PID_CONTROLLER_STATUS_SUCCESS: Success.
+ *      - Others: Failed.
  */
-err_code_t pid_controller_update(pid_controller_handle_t handle, float set_point, float measurement, float *pid_out);
+pid_controller_status_t pid_controller_update(pid_controller_handle_t handle, float set_point, float measurement, float *pid_out);
 
 #ifdef __cplusplus
 }

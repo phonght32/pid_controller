@@ -28,12 +28,12 @@ pid_controller_handle_t pid_controller_init(void)
 	return handle;
 }
 
-err_code_t pid_controller_set_config(pid_controller_handle_t handle, pid_controller_cfg_t config)
+pid_controller_status_t pid_controller_set_config(pid_controller_handle_t handle, pid_controller_cfg_t config)
 {
 	/* Check if handle structure is NULL */
 	if (handle == NULL)
 	{
-		return ERR_CODE_NULL_PTR;
+		return PID_CONTROLLER_STATUS_INVALID_ARG;
 	}
 
 	handle->kp = config.kp;
@@ -50,26 +50,26 @@ err_code_t pid_controller_set_config(pid_controller_handle_t handle, pid_control
 	handle->integrator = 0;
 	handle->differentiator = 0;
 
-	return ERR_CODE_SUCCESS;
+	return PID_CONTROLLER_STATUS_SUCCESS;
 }
 
-err_code_t pid_controller_config(pid_controller_handle_t handle)
+pid_controller_status_t pid_controller_config(pid_controller_handle_t handle)
 {
 	/* Check if handle structure is NULL */
 	if (handle == NULL)
 	{
-		return ERR_CODE_NULL_PTR;
+		return PID_CONTROLLER_STATUS_INVALID_ARG;
 	}
 
-	return ERR_CODE_SUCCESS;
+	return PID_CONTROLLER_STATUS_SUCCESS;
 }
 
-err_code_t pid_controller_update(pid_controller_handle_t handle, float set_point, float measurement, float *pid_out)
+pid_controller_status_t pid_controller_update(pid_controller_handle_t handle, float set_point, float measurement, float *pid_out)
 {
 	/* Check if handle structure is NULL */
 	if (handle == NULL)
 	{
-		return ERR_CODE_NULL_PTR;
+		return PID_CONTROLLER_STATUS_INVALID_ARG;
 	}
 
 	float error, proportional, integrator, output;
@@ -123,5 +123,5 @@ err_code_t pid_controller_update(pid_controller_handle_t handle, float set_point
 	handle->prev_error = error;
 	handle->prev_measurement = measurement;
 
-	return ERR_CODE_SUCCESS;
+	return PID_CONTROLLER_STATUS_SUCCESS;
 }
